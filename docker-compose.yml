@@ -1,0 +1,20 @@
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: currencyflow-front
+    working_dir: /app
+    ports:
+      - "${FRONTEND_PORT:-3000}:3000"
+    volumes:
+      - ./:/app
+      - node_modules:/app/node_modules
+    environment:
+      VITE_API_BASE_URL: "${VITE_API_BASE_URL:-http://localhost:8000}"
+      VITE_OAUTH_CLIENT_ID: "${VITE_OAUTH_CLIENT_ID:-019ec29e-86dc-70bd-9de9-157bc6e2f735}"
+      VITE_OAUTH_REDIRECT_URI: "${VITE_OAUTH_REDIRECT_URI:-http://localhost:3000/auth/callback}"
+    command: npm run dev -- --host 0.0.0.0
+
+volumes:
+  node_modules:

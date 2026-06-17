@@ -37,6 +37,28 @@ The backend seeded OAuth client currently uses:
 Redirect URI: http://localhost:3000/auth/callback
 ```
 
+## Docker Development
+
+Start the frontend development environment:
+
+```bash
+docker compose up -d --build
+```
+
+Open the application:
+
+```text
+http://localhost:3000
+```
+
+Stop the frontend environment:
+
+```bash
+docker compose down
+```
+
+The Docker setup mounts the source code into the container and keeps `node_modules` in a Docker volume, so Vite hot reload can run without requiring local Node.js dependencies.
+
 ## Planned Architecture
 
 The frontend will use a pragmatic Clean Architecture adapted to React:
