@@ -1,16 +1,16 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMemo } from 'react'
-import { useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
 
 import { createRegisterUserSchema, type RegisterUserFormValues } from '@/application'
 import { ApiError } from '@/infrastructure'
 import { useCountries, useCurrencies, useRegisterUser } from '@/presentation/hooks/useRegistration'
+import { AutocompleteField } from '@/shared/ui/autocomplete-field'
 import { Button } from '@/shared/ui/button'
 import { FieldError } from '@/shared/ui/field-error'
 import { PasswordInput } from '@/shared/ui/password-input'
-import { SelectField } from '@/shared/ui/select-field'
 import { TextInput } from '@/shared/ui/text-input'
 
 const defaultRegisterValues: RegisterUserFormValues = {
@@ -37,6 +37,7 @@ export function RegisterPage() {
   const { t } = useTranslation()
   const schema = useMemo(() => createRegisterUserSchema(t), [t])
   const {
+    control,
     formState: { errors },
     handleSubmit,
     register,
@@ -47,14 +48,25 @@ export function RegisterPage() {
   })
 
   const countryOptions = useMemo(
-    () => [...(countries.data ?? [])].sort((left, right) => left.name.localeCompare(right.name)),
+    () =>
+      [...(countries.data ?? [])]
+        .sort((left, right) => left.name.localeCompare(right.name))
+        .map((country) => ({
+          label: `${country.name} (${country.code})`,
+          value: country.code,
+        })),
     [countries.data],
   )
   const currencyOptions = useMemo(
     () =>
-      [...(currencies.data ?? [])].sort((left, right) =>
-        `${left.code} ${left.name}`.localeCompare(`${right.code} ${right.name}`),
-      ),
+      [...(currencies.data ?? [])]
+        .sort((left, right) =>
+          `${left.code} ${left.name}`.localeCompare(`${right.code} ${right.name}`),
+        )
+        .map((currency) => ({
+          label: `${currency.code} - ${currency.name}`,
+          value: currency.code,
+        })),
     [currencies.data],
   )
 
@@ -228,20 +240,22 @@ export function RegisterPage() {
                     <label className="text-sm font-semibold text-[#172033]" htmlFor="country_code">
                       {t('auth.register.fields.country')}
                     </label>
-                    <SelectField
-                      aria-describedby="country-code-error"
-                      aria-invalid={Boolean(errors.country_code)}
-                      disabled={referenceDataIsLoading}
-                      id="country_code"
-                      {...register('country_code')}
-                    >
-                      <option value="">{t('auth.register.placeholders.country')}</option>
-                      {countryOptions.map((country) => (
-                        <option key={country.code} value={country.code}>
-                          {country.name} ({country.code})
-                        </option>
-                      ))}
-                    </SelectField>
+                    <Controller
+                      control={control}
+                      name="country_code"
+                      render={({ field }) => (
+                        <AutocompleteField
+                          disabled={referenceDataIsLoading}
+                          id="country_code"
+                          invalid={Boolean(errors.country_code)}
+                          noResultsText={t('common.noResults')}
+                          onChange={field.onChange}
+                          options={countryOptions}
+                          placeholder={t('auth.register.placeholders.country')}
+                          value={field.value}
+                        />
+                      )}
+                    />
                     <FieldError id="country-code-error" message={errors.country_code?.message} />
                   </div>
 
@@ -252,20 +266,22 @@ export function RegisterPage() {
                     >
                       {t('auth.register.fields.preferredCurrency')}
                     </label>
-                    <SelectField
-                      aria-describedby="preferred-currency-code-error"
-                      aria-invalid={Boolean(errors.preferred_currency_code)}
-                      disabled={referenceDataIsLoading}
-                      id="preferred_currency_code"
-                      {...register('preferred_currency_code')}
-                    >
-                      <option value="">{t('auth.register.placeholders.preferredCurrency')}</option>
-                      {currencyOptions.map((currency) => (
-                        <option key={currency.code} value={currency.code}>
-                          {currency.code} - {currency.name}
-                        </option>
-                      ))}
-                    </SelectField>
+                    <Controller
+                      control={control}
+                      name="preferred_currency_code"
+                      render={({ field }) => (
+                        <AutocompleteField
+                          disabled={referenceDataIsLoading}
+                          id="preferred_currency_code"
+                          invalid={Boolean(errors.preferred_currency_code)}
+                          noResultsText={t('common.noResults')}
+                          onChange={field.onChange}
+                          options={currencyOptions}
+                          placeholder={t('auth.register.placeholders.preferredCurrency')}
+                          value={field.value}
+                        />
+                      )}
+                    />
                     <FieldError
                       id="preferred-currency-code-error"
                       message={errors.preferred_currency_code?.message}

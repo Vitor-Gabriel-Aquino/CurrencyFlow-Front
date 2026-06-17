@@ -1,4 +1,7 @@
 export const ptBR = {
+  common: {
+    noResults: 'Nenhum resultado encontrado',
+  },
   home: {
     brandSubtitle: 'Pagamentos multi-moeda',
     signIn: 'Entrar',
@@ -138,9 +141,104 @@ export const ptBR = {
     title: 'Visao geral das solicitacoes',
     description:
       'Revise solicitacoes enviadas, acompanhe seus status e inspecione a cotacao registrada no momento da criacao.',
+    actions: {
+      new: 'Nova solicitacao',
+      view: 'Ver detalhes',
+    },
+    filters: {
+      status: 'Status',
+    },
+    status: {
+      all: 'Todos',
+      pending: 'Pendente',
+      approved: 'Aprovada',
+      rejected: 'Rejeitada',
+      expired: 'Expirada',
+    },
+    events: {
+      created: 'Criada',
+      approved: 'Aprovada',
+      rejected: 'Rejeitada',
+      expired: 'Expirada',
+    },
+    table: {
+      title: 'Lista de solicitacoes',
+      description: 'Filtre e inspecione solicitacoes enviadas pelo CurrencyFlow.',
+      noDescription: 'Nenhuma descricao informada',
+      columns: {
+        request: 'Solicitacao',
+        amount: 'Valor',
+        status: 'Status',
+        expires: 'Expira',
+        actions: 'Acoes',
+      },
+    },
+    pagination: {
+      summary: 'Pagina {{page}} de {{total}} · {{count}} solicitacoes',
+      previous: 'Anterior',
+      next: 'Proxima',
+    },
+    loadingTitle: 'Carregando solicitacoes',
+    loadingDescription: 'O CurrencyFlow esta carregando os dados mais recentes.',
+    errorTitle: 'Nao foi possivel carregar as solicitacoes',
+    errorDescription: 'Atualize a pagina ou tente novamente em instantes.',
     emptyTitle: 'Nenhuma solicitacao carregada ainda',
     emptyDescription:
       'Solicitacoes enviadas aparecerao aqui com status atual, moeda original e contexto da cotacao.',
+    form: {
+      fields: {
+        title: 'Titulo',
+        description: 'Descricao',
+        amount: 'Valor',
+        currency: 'Moeda',
+      },
+      placeholders: {
+        currency: 'Selecione uma moeda',
+      },
+      validation: {
+        required: 'Este campo e obrigatorio.',
+        amount: 'Informe um valor valido com ate 2 casas decimais.',
+      },
+      errors: {
+        currencies: 'Nao foi possivel carregar moedas. Tente novamente.',
+        generic: 'Nao foi possivel criar a solicitacao. Tente novamente.',
+        exchangeProviderUnavailable:
+          'As cotacoes estao temporariamente indisponiveis. Tente novamente em instantes.',
+      },
+      actions: {
+        cancel: 'Cancelar',
+        create: 'Criar solicitacao',
+        creating: 'Criando solicitacao...',
+      },
+    },
+    detail: {
+      eyebrow: 'Detalhe da solicitacao',
+      back: 'Voltar para solicitacoes',
+      loadingTitle: 'Carregando solicitacao',
+      loadingDescription: 'O CurrencyFlow esta carregando o snapshot desta solicitacao.',
+      errorTitle: 'Nao foi possivel carregar a solicitacao',
+      errorDescription: 'A solicitacao pode nao existir ou nao estar mais acessivel.',
+      notFoundTitle: 'Solicitacao nao encontrada',
+      notFoundDescription: 'Abra a solicitacao novamente pela lista.',
+      originalAmount: 'Valor original',
+      convertedAmount: 'Valor convertido',
+      expiresAt: 'Expira em',
+      exchangeSnapshot: 'Snapshot da cotacao',
+      review: 'Revisao',
+      exchangeFields: {
+        baseCurrency: 'Moeda base',
+        localCurrency: 'Moeda local',
+        rate: 'Cotacao para EUR',
+        source: 'Fonte',
+        fetchedAt: 'Buscada em',
+      },
+      reviewFields: {
+        reviewedBy: 'Revisada por',
+        reviewedAt: 'Revisada em',
+        note: 'Nota de revisao',
+        events: 'Eventos',
+      },
+    },
   },
   newPaymentRequest: {
     eyebrow: 'Nova solicitacao',

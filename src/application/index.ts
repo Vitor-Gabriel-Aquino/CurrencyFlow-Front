@@ -2,3 +2,5 @@ export type { CurrencyFlowApi, PaginatedResponse } from './contracts/currencyFlo
 export { createLoginRedirectUrl } from './auth/authFlow'
 export { createRegisterUserSchema } from './auth/registrationSchema'
 export type { RegisterUserFormValues } from './auth/registrationSchema'
+export { createPaymentRequestSchema } from './paymentRequests/createPaymentRequestSchema'
+export type { CreatePaymentRequestFormValues } from './paymentRequests/createPaymentRequestSchema'
