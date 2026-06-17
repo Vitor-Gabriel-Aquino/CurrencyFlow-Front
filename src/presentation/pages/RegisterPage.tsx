@@ -115,29 +115,29 @@ export function RegisterPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#f7f8fb] px-6 py-8">
+    <main className="min-h-screen bg-[#f7f8fb] px-4 py-6 sm:px-6 sm:py-8">
       <div className="mx-auto mb-5 flex w-full max-w-5xl justify-end">
         <LanguageSwitcher />
       </div>
 
       <section className="mx-auto flex min-h-[calc(100vh-4rem)] w-full max-w-5xl items-center justify-center">
         <div className="grid w-full overflow-hidden rounded-lg border border-[#dfe5ef] bg-white shadow-sm lg:grid-cols-[0.75fr_1fr]">
-          <aside className="bg-[#172033] p-8 text-white">
-            <div className="flex size-11 items-center justify-center rounded-lg bg-white/10 text-sm font-bold">
+          <aside className="bg-[#172033] p-6 text-white sm:p-8">
+            <div className="flex size-10 items-center justify-center rounded-lg bg-white/10 text-sm font-bold sm:size-11">
               CF
             </div>
-            <p className="mt-10 text-sm font-semibold uppercase tracking-[0.16em] text-[#8fc7f5]">
+            <p className="mt-5 text-xs font-semibold uppercase tracking-[0.16em] text-[#8fc7f5] sm:mt-10 sm:text-sm">
               {t('auth.register.eyebrow')}
             </p>
-            <h1 className="mt-4 text-3xl font-semibold leading-tight">
+            <h1 className="mt-3 text-xl font-semibold leading-tight sm:mt-4 sm:text-3xl">
               {t('auth.register.title')}
             </h1>
-            <p className="mt-4 text-sm leading-6 text-white/70">
+            <p className="mt-3 hidden text-sm leading-6 text-white/70 sm:mt-4 sm:block">
               {t('auth.register.description')}
             </p>
           </aside>
 
-          <section className="p-8">
+          <section className="p-6 sm:p-8">
             {registrationSucceeded ? (
               <div className="flex min-h-[30rem] flex-col justify-center">
                 <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[#1268b3]">
@@ -154,7 +154,11 @@ export function RegisterPage() {
                 </Button>
               </div>
             ) : (
-              <form className="grid gap-5" noValidate onSubmit={handleSubmit(submitRegistration)}>
+              <form
+                className="grid gap-4 sm:gap-5"
+                noValidate
+                onSubmit={handleSubmit(submitRegistration)}
+              >
                 <div>
                   <h2 className="text-2xl font-semibold text-[#172033]">
                     {t('auth.register.formTitle')}
