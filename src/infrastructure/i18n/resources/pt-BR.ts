@@ -102,12 +102,62 @@ export const ptBR = {
       returnToLogin: 'Voltar para login',
     },
   },
-  dashboard: {
-    subtitle: 'Workspace de solicitacoes de pagamento',
-    signOut: 'Sair',
+  appShell: {
+    brandSubtitle: 'Operacoes de pagamento',
     signedInAs: 'Logado como',
+    signOut: 'Sair',
+    navigation: {
+      label: 'Navegacao do workspace',
+      dashboard: 'Dashboard',
+      paymentRequests: 'Solicitacoes',
+      newPaymentRequest: 'Nova solicitacao',
+      financeReview: 'Revisao financeira',
+    },
+    roles: {
+      employee: 'Colaborador',
+      finance: 'Financeiro',
+    },
+  },
+  dashboard: {
+    eyebrow: 'Visao geral',
+    title: 'Workspace de solicitacoes de pagamento',
+    description:
+      'Acompanhe o contexto da sua conta e inicie os fluxos para criar, monitorar e revisar solicitacoes de pagamento multi-moeda.',
     role: 'Funcao',
     country: 'Pais',
     preferredCurrency: 'Moeda preferida',
+    reviewWindow: {
+      title: 'Janela de revisao financeira',
+      description:
+        'Solicitacoes pendentes ficam disponiveis para revisao por 48 horas antes de expirarem automaticamente.',
+      metric: 'janela de revisao',
+    },
+  },
+  paymentRequests: {
+    eyebrow: 'Solicitacoes de pagamento',
+    title: 'Visao geral das solicitacoes',
+    description:
+      'Revise solicitacoes enviadas, acompanhe seus status e inspecione a cotacao registrada no momento da criacao.',
+    emptyTitle: 'Nenhuma solicitacao carregada ainda',
+    emptyDescription:
+      'Solicitacoes enviadas aparecerao aqui com status atual, moeda original e contexto da cotacao.',
+  },
+  newPaymentRequest: {
+    eyebrow: 'Nova solicitacao',
+    title: 'Criar solicitacao de pagamento',
+    description:
+      'Prepare uma solicitacao na moeda original enquanto o CurrencyFlow registra a cotacao do momento.',
+    placeholderTitle: 'Prepare os detalhes da solicitacao',
+    placeholderDescription:
+      'Solicitacoes de pagamento sao criadas com titulo, descricao, valor original e selecao de moeda.',
+  },
+  financeReview: {
+    eyebrow: 'Revisao financeira',
+    title: 'Revisar solicitacoes pendentes',
+    description:
+      'Usuarios financeiros podem aprovar ou rejeitar solicitacoes pendentes e nao expiradas neste workspace.',
+    emptyTitle: 'Nenhuma fila de revisao carregada ainda',
+    emptyDescription:
+      'Solicitacoes pendentes prontas para revisao financeira aparecerao aqui com o contexto necessario para decisoes de aprovacao.',
   },
 }
