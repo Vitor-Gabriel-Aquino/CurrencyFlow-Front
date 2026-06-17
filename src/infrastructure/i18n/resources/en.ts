@@ -103,12 +103,62 @@ export const en = {
       returnToLogin: 'Return to sign in',
     },
   },
-  dashboard: {
-    subtitle: 'Payment request workspace',
-    signOut: 'Sign out',
+  appShell: {
+    brandSubtitle: 'Payment operations',
     signedInAs: 'Signed in as',
+    signOut: 'Sign out',
+    navigation: {
+      label: 'Workspace navigation',
+      dashboard: 'Dashboard',
+      paymentRequests: 'Payment Requests',
+      newPaymentRequest: 'New Payment Request',
+      financeReview: 'Finance Review',
+    },
+    roles: {
+      employee: 'Employee',
+      finance: 'Finance',
+    },
+  },
+  dashboard: {
+    eyebrow: 'Workspace overview',
+    title: 'Payment request workspace',
+    description:
+      'Track your account context and start the workflows used to create, monitor, and review multi-currency payment requests.',
     role: 'Role',
     country: 'Country',
     preferredCurrency: 'Preferred currency',
+    reviewWindow: {
+      title: 'Finance review window',
+      description:
+        'Pending payment requests remain reviewable for 48 hours before they expire automatically.',
+      metric: 'review window',
+    },
+  },
+  paymentRequests: {
+    eyebrow: 'Payment requests',
+    title: 'Requests overview',
+    description:
+      'Review submitted requests, follow their status, and inspect the exchange-rate snapshot used at creation time.',
+    emptyTitle: 'No requests loaded yet',
+    emptyDescription:
+      'Submitted requests will appear here with their current status, original currency, and exchange-rate context.',
+  },
+  newPaymentRequest: {
+    eyebrow: 'New request',
+    title: 'Create a payment request',
+    description:
+      'Prepare a payment request in the original currency while CurrencyFlow records the exchange-rate snapshot.',
+    placeholderTitle: 'Prepare request details',
+    placeholderDescription:
+      'Payment requests are created from a title, description, original amount, and currency selection.',
+  },
+  financeReview: {
+    eyebrow: 'Finance review',
+    title: 'Review pending requests',
+    description:
+      'Finance users can approve or reject pending, unexpired payment requests from this workspace.',
+    emptyTitle: 'No pending review queue loaded yet',
+    emptyDescription:
+      'Pending requests ready for finance review will appear here with the context needed for approval decisions.',
   },
 }

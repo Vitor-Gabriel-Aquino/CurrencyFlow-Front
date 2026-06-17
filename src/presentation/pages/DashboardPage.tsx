@@ -1,76 +1,87 @@
-import { LogOut } from 'lucide-react'
+import { Clock3, Globe2, UserRound } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router'
 
-import { useCurrentUser, useLogout } from '@/presentation/hooks/useAuth'
-import { Button } from '@/shared/ui/button'
+import { useCurrentUser } from '@/presentation/hooks/useAuth'
 
 export function DashboardPage() {
   const currentUser = useCurrentUser()
-  const logout = useLogout()
-  const navigate = useNavigate()
   const user = currentUser.data
   const { t } = useTranslation()
 
   return (
-    <main className="min-h-screen bg-[#f7f8fb]">
-      <section className="mx-auto flex min-h-screen w-full max-w-6xl flex-col px-6 py-8">
-        <header className="flex items-center justify-between border-b border-[#dfe5ef] pb-5">
+    <div className="grid gap-6">
+      <section>
+        <p className="text-sm font-semibold uppercase tracking-[0.14em] text-[#1268b3]">
+          {t('dashboard.eyebrow')}
+        </p>
+        <h2 className="mt-2 text-3xl font-semibold tracking-tight text-[#172033]">
+          {t('dashboard.title')}
+        </h2>
+        <p className="mt-2 max-w-3xl text-sm leading-6 text-[#526076]">
+          {t('dashboard.description')}
+        </p>
+      </section>
+
+      <section className="grid gap-4 md:grid-cols-3">
+        <AccountSummaryCard
+          label={t('dashboard.role')}
+          title={user ? t(`appShell.roles.${user.role}`) : '-'}
+          icon={UserRound}
+        />
+        <AccountSummaryCard
+          label={t('dashboard.country')}
+          title={user ? `${user.country.name} (${user.country.code})` : '-'}
+          icon={Globe2}
+        />
+        <AccountSummaryCard
+          label={t('dashboard.preferredCurrency')}
+          title={
+            user
+              ? `${user.preferred_currency.name} (${user.preferred_currency.code})`
+              : '-'
+          }
+          icon={Clock3}
+        />
+      </section>
+
+      <section className="rounded-lg border border-[#dfe5ef] bg-white p-6 shadow-sm">
+        <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
-            <p className="text-sm font-semibold text-[#172033]">CurrencyFlow</p>
-            <p className="text-xs text-[#657189]">{t('dashboard.subtitle')}</p>
+            <h3 className="text-lg font-semibold text-[#172033]">
+              {t('dashboard.reviewWindow.title')}
+            </h3>
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-[#526076]">
+              {t('dashboard.reviewWindow.description')}
+            </p>
           </div>
-
-          <Button
-            disabled={logout.isPending}
-            onClick={() => {
-              logout.mutate(undefined, {
-                onSettled: () => navigate('/', { replace: true }),
-              })
-            }}
-            type="button"
-            variant="secondary"
-          >
-            <LogOut className="size-4" />
-            {t('dashboard.signOut')}
-          </Button>
-        </header>
-
-        <div className="grid flex-1 items-center gap-6 py-10">
-          <section className="rounded-lg border border-[#dfe5ef] bg-white p-6 shadow-sm">
-            <p className="text-sm font-medium text-[#657189]">{t('dashboard.signedInAs')}</p>
-            <h1 className="mt-2 text-3xl font-semibold text-[#172033]">{user?.name}</h1>
-            <p className="mt-1 text-sm text-[#526076]">{user?.email}</p>
-
-            <dl className="mt-8 grid gap-4 md:grid-cols-3">
-              <div className="rounded-lg border border-[#dfe5ef] p-4">
-                <dt className="text-xs font-medium uppercase text-[#657189]">
-                  {t('dashboard.role')}
-                </dt>
-                <dd className="mt-2 text-sm font-semibold capitalize text-[#172033]">
-                  {user?.role}
-                </dd>
-              </div>
-              <div className="rounded-lg border border-[#dfe5ef] p-4">
-                <dt className="text-xs font-medium uppercase text-[#657189]">
-                  {t('dashboard.country')}
-                </dt>
-                <dd className="mt-2 text-sm font-semibold text-[#172033]">
-                  {user?.country.name} ({user?.country.code})
-                </dd>
-              </div>
-              <div className="rounded-lg border border-[#dfe5ef] p-4">
-                <dt className="text-xs font-medium uppercase text-[#657189]">
-                  {t('dashboard.preferredCurrency')}
-                </dt>
-                <dd className="mt-2 text-sm font-semibold text-[#172033]">
-                  {user?.preferred_currency.name} ({user?.preferred_currency.code})
-                </dd>
-              </div>
-            </dl>
-          </section>
+          <div className="rounded-lg bg-[#e9f2fb] px-4 py-3 text-right">
+            <p className="text-2xl font-semibold text-[#1268b3]">48h</p>
+            <p className="text-xs font-medium uppercase text-[#526076]">
+              {t('dashboard.reviewWindow.metric')}
+            </p>
+          </div>
         </div>
       </section>
-    </main>
+    </div>
+  )
+}
+
+type AccountSummaryCardProps = {
+  icon: typeof UserRound
+  label: string
+  title: string
+}
+
+function AccountSummaryCard({ icon: Icon, label, title }: AccountSummaryCardProps) {
+  return (
+    <article className="rounded-lg border border-[#dfe5ef] bg-white p-5 shadow-sm">
+      <div className="mb-4 flex size-10 items-center justify-center rounded-lg bg-[#e9f2fb] text-[#1268b3]">
+        <Icon className="size-5" />
+      </div>
+      <p className="text-xs font-medium uppercase tracking-[0.08em] text-[#657189]">
+        {label}
+      </p>
+      <h3 className="mt-2 text-base font-semibold text-[#172033]">{title}</h3>
+    </article>
   )
 }
