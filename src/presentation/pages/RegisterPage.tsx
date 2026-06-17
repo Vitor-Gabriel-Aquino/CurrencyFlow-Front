@@ -1,25 +1,50 @@
-import type { FormEvent } from 'react'
-import { useMemo, useState } from 'react'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useMemo } from 'react'
+import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
-import { Eye, EyeOff } from 'lucide-react'
 
+import { createRegisterUserSchema, type RegisterUserFormValues } from '@/application'
 import { ApiError } from '@/infrastructure'
 import { useCountries, useCurrencies, useRegisterUser } from '@/presentation/hooks/useRegistration'
 import { Button } from '@/shared/ui/button'
+import { FieldError } from '@/shared/ui/field-error'
+import { PasswordInput } from '@/shared/ui/password-input'
+import { SelectField } from '@/shared/ui/select-field'
+import { TextInput } from '@/shared/ui/text-input'
 
-type RegistrationFormErrors = Record<string, string[]>
-
-const defaultFormErrors: RegistrationFormErrors = {}
+const defaultRegisterValues: RegisterUserFormValues = {
+  name: '',
+  email: '',
+  password: '',
+  password_confirmation: '',
+  country_code: '',
+  preferred_currency_code: '',
+}
+const registerFieldNames = new Set<keyof RegisterUserFormValues>([
+  'name',
+  'email',
+  'password',
+  'password_confirmation',
+  'country_code',
+  'preferred_currency_code',
+])
 
 export function RegisterPage() {
   const countries = useCountries()
   const currencies = useCurrencies()
   const registerUser = useRegisterUser()
-  const [formErrors, setFormErrors] = useState<RegistrationFormErrors>(defaultFormErrors)
-  const [passwordIsVisible, setPasswordIsVisible] = useState(false)
-  const [passwordConfirmationIsVisible, setPasswordConfirmationIsVisible] = useState(false)
   const { t } = useTranslation()
+  const schema = useMemo(() => createRegisterUserSchema(t), [t])
+  const {
+    formState: { errors },
+    handleSubmit,
+    register,
+    setError,
+  } = useForm<RegisterUserFormValues>({
+    defaultValues: defaultRegisterValues,
+    resolver: zodResolver(schema),
+  })
 
   const countryOptions = useMemo(
     () => [...(countries.data ?? [])].sort((left, right) => left.name.localeCompare(right.name)),
@@ -37,58 +62,43 @@ export function RegisterPage() {
   const referenceDataFailed = countries.isError || currencies.isError
   const registrationSucceeded = registerUser.isSuccess
 
-  function fieldError(field: string): string | undefined {
-    return formErrors[field]?.[0]
+  function submitRegistration(values: RegisterUserFormValues) {
+    registerUser.mutate(values, {
+      onError(error) {
+        if (error instanceof ApiError && error.kind === 'validation') {
+          applyServerValidationErrors(error.validationErrors)
+          return
+        }
+
+        setError('root', {
+          message: t('auth.register.error'),
+        })
+      },
+    })
   }
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-
-    const formData = new FormData(event.currentTarget)
-    const name = String(formData.get('name') ?? '').trim()
-    const email = String(formData.get('email') ?? '').trim()
-    const password = String(formData.get('password') ?? '')
-    const passwordConfirmation = String(formData.get('password_confirmation') ?? '')
-    const countryCode = String(formData.get('country_code') ?? '')
-    const preferredCurrencyCode = String(formData.get('preferred_currency_code') ?? '')
-    const validationErrors = validateRegistrationForm({
-      countryCode,
-      email,
-      name,
-      password,
-      passwordConfirmation,
-      preferredCurrencyCode,
-      t,
-    })
-
-    if (Object.keys(validationErrors).length > 0) {
-      setFormErrors(validationErrors)
+  function applyServerValidationErrors(validationErrors: ApiError['validationErrors']) {
+    if (!validationErrors) {
+      setError('root', {
+        message: t('auth.register.error'),
+      })
       return
     }
 
-    setFormErrors(defaultFormErrors)
-    registerUser.mutate(
-      {
-        name,
-        email,
-        password,
-        password_confirmation: passwordConfirmation,
-        country_code: countryCode,
-        preferred_currency_code: preferredCurrencyCode,
-      },
-      {
-        onError(error) {
-          if (error instanceof ApiError && error.kind === 'validation') {
-            setFormErrors(error.validationErrors ?? defaultFormErrors)
-            return
-          }
+    Object.entries(validationErrors).forEach(([field, messages]) => {
+      const message = messages[0] ?? t('auth.register.error')
 
-          setFormErrors({
-            form: [t('auth.register.error')],
-          })
-        },
-      },
-    )
+      if (!registerFieldNames.has(field as keyof RegisterUserFormValues)) {
+        setError('root', {
+          message,
+        })
+        return
+      }
+
+      setError(field as keyof RegisterUserFormValues, {
+        message,
+      })
+    })
   }
 
   return (
@@ -127,7 +137,7 @@ export function RegisterPage() {
                 </Button>
               </div>
             ) : (
-              <form className="grid gap-5" noValidate onSubmit={handleSubmit}>
+              <form className="grid gap-5" noValidate onSubmit={handleSubmit(submitRegistration)}>
                 <div>
                   <h2 className="text-2xl font-semibold text-[#172033]">
                     {t('auth.register.formTitle')}
@@ -143,9 +153,9 @@ export function RegisterPage() {
                   </p>
                 ) : null}
 
-                {fieldError('form') ? (
+                {errors.root?.message ? (
                   <p className="rounded-lg border border-[#fecdca] bg-[#fffbfa] p-3 text-sm font-medium text-[#b42318]">
-                    {fieldError('form')}
+                    {errors.root.message}
                   </p>
                 ) : null}
 
@@ -153,28 +163,28 @@ export function RegisterPage() {
                   <label className="text-sm font-semibold text-[#172033]" htmlFor="name">
                     {t('auth.register.fields.name')}
                   </label>
-                  <input
-                    className="min-h-11 rounded-lg border border-[#cfd8e6] px-3 text-sm outline-none focus:border-[#1268b3] focus:ring-4 focus:ring-[#d9ecfb]"
+                  <TextInput
+                    aria-describedby="name-error"
+                    aria-invalid={Boolean(errors.name)}
                     id="name"
-                    name="name"
-                    required
                     type="text"
+                    {...register('name')}
                   />
-                  <FieldError message={fieldError('name')} />
+                  <FieldError id="name-error" message={errors.name?.message} />
                 </div>
 
                 <div className="grid gap-2">
                   <label className="text-sm font-semibold text-[#172033]" htmlFor="email">
                     {t('auth.register.fields.email')}
                   </label>
-                  <input
-                    className="min-h-11 rounded-lg border border-[#cfd8e6] px-3 text-sm outline-none focus:border-[#1268b3] focus:ring-4 focus:ring-[#d9ecfb]"
+                  <TextInput
+                    aria-describedby="email-error"
+                    aria-invalid={Boolean(errors.email)}
                     id="email"
-                    name="email"
-                    required
                     type="email"
+                    {...register('email')}
                   />
-                  <FieldError message={fieldError('email')} />
+                  <FieldError id="email-error" message={errors.email?.message} />
                 </div>
 
                 <div className="grid gap-4 md:grid-cols-2 md:gap-x-6">
@@ -183,13 +193,13 @@ export function RegisterPage() {
                       {t('auth.register.fields.password')}
                     </label>
                     <PasswordInput
+                      aria-describedby="password-error"
+                      aria-invalid={Boolean(errors.password)}
                       id="password"
-                      isVisible={passwordIsVisible}
-                      label={t('auth.register.actions.togglePassword')}
-                      name="password"
-                      onToggle={() => setPasswordIsVisible((current) => !current)}
+                      toggleLabel={t('auth.register.actions.togglePassword')}
+                      {...register('password')}
                     />
-                    <FieldError message={fieldError('password')} />
+                    <FieldError id="password-error" message={errors.password?.message} />
                   </div>
 
                   <div className="grid gap-2">
@@ -200,13 +210,16 @@ export function RegisterPage() {
                       {t('auth.register.fields.passwordConfirmation')}
                     </label>
                     <PasswordInput
+                      aria-describedby="password-confirmation-error"
+                      aria-invalid={Boolean(errors.password_confirmation)}
                       id="password_confirmation"
-                      isVisible={passwordConfirmationIsVisible}
-                      label={t('auth.register.actions.togglePasswordConfirmation')}
-                      name="password_confirmation"
-                      onToggle={() => setPasswordConfirmationIsVisible((current) => !current)}
+                      toggleLabel={t('auth.register.actions.togglePasswordConfirmation')}
+                      {...register('password_confirmation')}
                     />
-                    <FieldError message={fieldError('password_confirmation')} />
+                    <FieldError
+                      id="password-confirmation-error"
+                      message={errors.password_confirmation?.message}
+                    />
                   </div>
                 </div>
 
@@ -215,12 +228,12 @@ export function RegisterPage() {
                     <label className="text-sm font-semibold text-[#172033]" htmlFor="country_code">
                       {t('auth.register.fields.country')}
                     </label>
-                    <select
-                      className="min-h-11 w-full min-w-0 rounded-lg border border-[#cfd8e6] bg-white px-3 text-sm outline-none focus:border-[#1268b3] focus:ring-4 focus:ring-[#d9ecfb]"
+                    <SelectField
+                      aria-describedby="country-code-error"
+                      aria-invalid={Boolean(errors.country_code)}
                       disabled={referenceDataIsLoading}
                       id="country_code"
-                      name="country_code"
-                      required
+                      {...register('country_code')}
                     >
                       <option value="">{t('auth.register.placeholders.country')}</option>
                       {countryOptions.map((country) => (
@@ -228,8 +241,8 @@ export function RegisterPage() {
                           {country.name} ({country.code})
                         </option>
                       ))}
-                    </select>
-                    <FieldError message={fieldError('country_code')} />
+                    </SelectField>
+                    <FieldError id="country-code-error" message={errors.country_code?.message} />
                   </div>
 
                   <div className="grid gap-2">
@@ -239,12 +252,12 @@ export function RegisterPage() {
                     >
                       {t('auth.register.fields.preferredCurrency')}
                     </label>
-                    <select
-                      className="min-h-11 w-full min-w-0 rounded-lg border border-[#cfd8e6] bg-white px-3 text-sm outline-none focus:border-[#1268b3] focus:ring-4 focus:ring-[#d9ecfb]"
+                    <SelectField
+                      aria-describedby="preferred-currency-code-error"
+                      aria-invalid={Boolean(errors.preferred_currency_code)}
                       disabled={referenceDataIsLoading}
                       id="preferred_currency_code"
-                      name="preferred_currency_code"
-                      required
+                      {...register('preferred_currency_code')}
                     >
                       <option value="">{t('auth.register.placeholders.preferredCurrency')}</option>
                       {currencyOptions.map((currency) => (
@@ -252,8 +265,11 @@ export function RegisterPage() {
                           {currency.code} - {currency.name}
                         </option>
                       ))}
-                    </select>
-                    <FieldError message={fieldError('preferred_currency_code')} />
+                    </SelectField>
+                    <FieldError
+                      id="preferred-currency-code-error"
+                      message={errors.preferred_currency_code?.message}
+                    />
                   </div>
                 </div>
 
@@ -261,10 +277,7 @@ export function RegisterPage() {
                   <Link className="text-sm font-semibold text-[#1268b3]" to="/login">
                     {t('auth.register.alreadyHaveAccount')}
                   </Link>
-                  <Button
-                    disabled={referenceDataIsLoading || registerUser.isPending}
-                    type="submit"
-                  >
+                  <Button disabled={referenceDataIsLoading || registerUser.isPending} type="submit">
                     {registerUser.isPending
                       ? t('auth.register.pending')
                       : t('auth.register.submit')}
@@ -277,104 +290,4 @@ export function RegisterPage() {
       </section>
     </main>
   )
-}
-
-function PasswordInput({
-  id,
-  isVisible,
-  label,
-  name,
-  onToggle,
-}: {
-  id: string
-  isVisible: boolean
-  label: string
-  name: string
-  onToggle(): void
-}) {
-  const Icon = isVisible ? EyeOff : Eye
-
-  return (
-    <div className="relative min-w-0">
-      <input
-        className="min-h-11 w-full min-w-0 rounded-lg border border-[#cfd8e6] px-3 pr-11 text-sm outline-none focus:border-[#1268b3] focus:ring-4 focus:ring-[#d9ecfb]"
-        id={id}
-        minLength={8}
-        name={name}
-        required
-        type={isVisible ? 'text' : 'password'}
-      />
-      <button
-        aria-label={label}
-        className="absolute right-2 top-1/2 flex size-8 -translate-y-1/2 items-center justify-center rounded-md text-[#526076] hover:bg-[#f2f5f9] hover:text-[#172033] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1268b3]"
-        onClick={onToggle}
-        type="button"
-      >
-        <Icon className="size-4" />
-      </button>
-    </div>
-  )
-}
-
-function FieldError({ message }: { message?: string }) {
-  return (
-    <p
-      aria-live="polite"
-      className="min-h-10 text-sm font-medium leading-5 text-[#b42318]"
-    >
-      {message ?? ''}
-    </p>
-  )
-}
-
-function validateRegistrationForm({
-  countryCode,
-  email,
-  name,
-  password,
-  passwordConfirmation,
-  preferredCurrencyCode,
-  t,
-}: {
-  countryCode: string
-  email: string
-  name: string
-  password: string
-  passwordConfirmation: string
-  preferredCurrencyCode: string
-  t(key: string): string
-}): RegistrationFormErrors {
-  const errors: RegistrationFormErrors = {}
-
-  if (!name) {
-    errors.name = [t('auth.register.validation.required')]
-  }
-
-  if (!email) {
-    errors.email = [t('auth.register.validation.required')]
-  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    errors.email = [t('auth.register.validation.email')]
-  }
-
-  if (!password) {
-    errors.password = [t('auth.register.validation.required')]
-  } else if (password.length < 8) {
-    errors.password = [t('auth.register.validation.passwordMin')]
-  }
-
-  if (!passwordConfirmation) {
-    errors.password_confirmation = [t('auth.register.validation.required')]
-  } else if (password !== passwordConfirmation) {
-    errors.password_confirmation = [t('auth.register.validation.passwordConfirmation')]
-  }
-
-  if (!countryCode) {
-    errors.country_code = [t('auth.register.validation.required')]
-  }
-
-  if (!preferredCurrencyCode) {
-    errors.preferred_currency_code = [t('auth.register.validation.required')]
-  }
-
-  return errors
 }
