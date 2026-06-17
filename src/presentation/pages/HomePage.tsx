@@ -69,8 +69,8 @@ export function HomePage() {
                   <ArrowRight className="size-4" />
                 </Link>
               </Button>
-              <Button type="button" variant="secondary">
-                {t('home.createAccount')}
+              <Button asChild type="button" variant="secondary">
+                <Link to="/register">{t('home.createAccount')}</Link>
               </Button>
             </div>
 
