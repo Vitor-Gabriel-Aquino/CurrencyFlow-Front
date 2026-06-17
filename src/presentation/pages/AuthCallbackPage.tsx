@@ -4,6 +4,7 @@ import { Link, useNavigate, useSearchParams } from 'react-router'
 
 import { env } from '@/infrastructure/config/env'
 import { currencyFlowApi, sessionAuthTokenStorage, sessionPkceStorage } from '@/infrastructure'
+import { LanguageSwitcher } from '@/shared/ui/language-switcher'
 
 type CallbackState = 'processing' | 'failed'
 
@@ -70,8 +71,13 @@ export function AuthCallbackPage() {
   }, [navigate, searchParams])
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-[#f7f8fb] px-6">
-      <section className="w-full max-w-md rounded-lg border border-[#dfe5ef] bg-white p-8 text-center shadow-sm">
+    <main className="min-h-screen bg-[#f7f8fb] px-6 py-6">
+      <div className="mx-auto flex w-full max-w-5xl justify-end">
+        <LanguageSwitcher />
+      </div>
+
+      <div className="flex min-h-[calc(100vh-5rem)] items-center justify-center">
+        <section className="w-full max-w-md rounded-lg border border-[#dfe5ef] bg-white p-8 text-center shadow-sm">
         {state === 'processing' ? (
           <>
             <h1 className="text-2xl font-semibold text-[#172033]">
@@ -94,7 +100,8 @@ export function AuthCallbackPage() {
             </Link>
           </>
         )}
-      </section>
+        </section>
+      </div>
     </main>
   )
 }

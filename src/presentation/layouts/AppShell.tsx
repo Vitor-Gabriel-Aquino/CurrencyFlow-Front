@@ -12,6 +12,7 @@ import { NavLink, Outlet, useNavigate } from 'react-router'
 import type { User } from '@/domain'
 import { useCurrentUser, useLogout } from '@/presentation/hooks/useAuth'
 import { Button } from '@/shared/ui/button'
+import { LanguageSwitcher } from '@/shared/ui/language-switcher'
 import { cn } from '@/shared/utils/cn'
 
 type NavigationItem = {
@@ -100,6 +101,7 @@ export function AppShell() {
             </div>
 
             <div className="flex flex-wrap items-center gap-3">
+              <LanguageSwitcher />
               {user ? <UserRoleBadge user={user} /> : null}
               <Button
                 disabled={logout.isPending}

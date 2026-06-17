@@ -1,5 +1,10 @@
 export const en = {
   common: {
+    language: 'Language',
+    languages: {
+      en: 'English',
+      ptBR: 'Portuguese',
+    },
     noResults: 'No results found',
   },
   home: {

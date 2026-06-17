@@ -10,6 +10,7 @@ import { useCountries, useCurrencies, useRegisterUser } from '@/presentation/hoo
 import { AutocompleteField } from '@/shared/ui/autocomplete-field'
 import { Button } from '@/shared/ui/button'
 import { FieldError } from '@/shared/ui/field-error'
+import { LanguageSwitcher } from '@/shared/ui/language-switcher'
 import { PasswordInput } from '@/shared/ui/password-input'
 import { TextInput } from '@/shared/ui/text-input'
 
@@ -115,6 +116,10 @@ export function RegisterPage() {
 
   return (
     <main className="min-h-screen bg-[#f7f8fb] px-6 py-8">
+      <div className="mx-auto mb-5 flex w-full max-w-5xl justify-end">
+        <LanguageSwitcher />
+      </div>
+
       <section className="mx-auto flex min-h-[calc(100vh-4rem)] w-full max-w-5xl items-center justify-center">
         <div className="grid w-full overflow-hidden rounded-lg border border-[#dfe5ef] bg-white shadow-sm lg:grid-cols-[0.75fr_1fr]">
           <aside className="bg-[#172033] p-8 text-white">

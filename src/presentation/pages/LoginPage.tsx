@@ -4,13 +4,19 @@ import { Link } from 'react-router'
 
 import { useLoginRedirect } from '@/presentation/hooks/useAuth'
 import { Button } from '@/shared/ui/button'
+import { LanguageSwitcher } from '@/shared/ui/language-switcher'
 
 export function LoginPage() {
   const loginRedirect = useLoginRedirect()
   const { t } = useTranslation()
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-[#f7f8fb] px-6">
+    <main className="min-h-screen bg-[#f7f8fb] px-6 py-6">
+      <div className="mx-auto flex w-full max-w-5xl justify-end">
+        <LanguageSwitcher />
+      </div>
+
+      <div className="flex min-h-[calc(100vh-5rem)] items-center justify-center">
       <section className="w-full max-w-md rounded-lg border border-[#dfe5ef] bg-white p-8 shadow-sm">
         <div className="mb-6 flex size-12 items-center justify-center rounded-lg bg-[#e9f2fb] text-[#1268b3]">
           <ShieldCheck className="size-6" />
@@ -37,6 +43,7 @@ export function LoginPage() {
           {t('auth.login.back')}
         </Link>
       </section>
+      </div>
     </main>
   )
 }
