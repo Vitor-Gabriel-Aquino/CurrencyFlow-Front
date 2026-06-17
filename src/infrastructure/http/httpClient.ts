@@ -79,7 +79,11 @@ export class HttpClient {
       return null
     }
 
-    return JSON.parse(text) as Record<string, unknown>
+    try {
+      return JSON.parse(text) as Record<string, unknown>
+    } catch {
+      return null
+    }
   }
 }
 
