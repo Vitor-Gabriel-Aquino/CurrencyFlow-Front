@@ -1,73 +1,67 @@
-# React + TypeScript + Vite
+# CurrencyFlow Front
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+CurrencyFlow Front is the React, TypeScript, and Vite frontend for the CurrencyFlow payment request platform.
 
-Currently, two official plugins are available:
+It consumes the Laravel API from the `CurrencyFlow` backend repository and will provide:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- OAuth 2.0 Authorization Code with PKCE authentication.
+- Employee registration.
+- Payment request creation and tracking.
+- Finance approval and rejection workflows.
+- A polished operational interface for repeated business use.
 
-## React Compiler
+## Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React
+- TypeScript
+- Vite
+- Docker for local development
 
-## Expanding the ESLint configuration
+## Local Development
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+The frontend development server is configured to run on:
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```text
+http://localhost:3000
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+The backend API is expected at:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```text
+http://localhost:8000
+```
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+The backend seeded OAuth client currently uses:
+
+```text
+Redirect URI: http://localhost:3000/auth/callback
+```
+
+## Planned Architecture
+
+The frontend will use a pragmatic Clean Architecture adapted to React:
+
+```text
+src/
+  app/
+  domain/
+  application/
+  infrastructure/
+  presentation/
+  shared/
+```
+
+High-level rules:
+
+- Presentation code must not call raw HTTP directly.
+- Application code orchestrates user flows and use cases.
+- Domain code stays framework-light and free from React/browser APIs.
+- Infrastructure owns API calls, token storage, environment access, and DTO mapping.
+
+## Delivery Checklist
+
+See:
+
+```text
+FRONTEND_DELIVERY_CHECKLIST.md
 ```
