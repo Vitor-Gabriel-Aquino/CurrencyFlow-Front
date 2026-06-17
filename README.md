@@ -42,6 +42,14 @@ The backend seeded OAuth client currently uses:
 Redirect URI: http://localhost:3000/auth/callback
 ```
 
+The frontend should request these OAuth scopes when starting the PKCE flow:
+
+```text
+profile:read profile:update payments:read payments:create payments:approve
+```
+
+Copy `.env.example` to `.env` when local overrides are needed. `VITE_DEFAULT_LOCALE` accepts `en` or `pt-BR`.
+
 ## Docker Development
 
 Start the frontend development environment:
