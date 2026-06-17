@@ -255,8 +255,35 @@ export const en = {
     title: 'Review pending requests',
     description:
       'Finance users can approve or reject pending, unexpired payment requests from this workspace.',
+    loadingTitle: 'Loading review queue',
+    loadingDescription: 'CurrencyFlow is loading pending requests for finance review.',
+    errorTitle: 'Review queue could not be loaded',
+    errorDescription: 'Refresh the page or try again in a moment.',
     emptyTitle: 'No pending review queue loaded yet',
     emptyDescription:
       'Pending requests ready for finance review will appear here with the context needed for approval decisions.',
+    fields: {
+      originalAmount: 'Original amount',
+      convertedAmount: 'Converted amount',
+      exchangeRate: 'EUR exchange rate',
+      expiresAt: 'Expires at',
+      reviewNote: 'Review note',
+    },
+    placeholders: {
+      reviewNote: 'Add an optional note for the audit history',
+    },
+    actions: {
+      approve: 'Approve',
+      approving: 'Approving...',
+      approved: 'Payment request approved.',
+      reject: 'Reject',
+      rejecting: 'Rejecting...',
+      rejected: 'Payment request rejected.',
+    },
+    errors: {
+      conflict: 'This request is no longer pending or reviewable.',
+      forbidden: 'You do not have permission to review this request.',
+      generic: 'The review action could not be completed. Please try again.',
+    },
   },
 }

@@ -8,8 +8,8 @@ import {
   usePaymentRequests,
 } from '@/presentation/hooks/usePaymentRequests'
 import { Button } from '@/shared/ui/button'
+import { PaymentRequestStatusBadge } from '@/shared/ui/payment-request-status-badge'
 import { SelectField } from '@/shared/ui/select-field'
-import { cn } from '@/shared/utils/cn'
 import { formatCurrencyAmount, formatDateTime } from '@/shared/utils/format'
 
 const perPage = 10
@@ -20,13 +20,6 @@ const statusOptions: Array<PaymentRequestStatus | 'all'> = [
   'rejected',
   'expired',
 ]
-const statusBadgeClasses: Record<PaymentRequestStatus, string> = {
-  pending: 'bg-[#e9f2fb] text-[#1268b3]',
-  approved: 'bg-[#ecfdf3] text-[#027a48]',
-  rejected: 'bg-[#fef3f2] text-[#b42318]',
-  expired: 'bg-[#fff4e5] text-[#b54708]',
-}
-
 export function PaymentRequestsPage() {
   const { t } = useTranslation()
   const [searchParams, setSearchParams] = useSearchParams()
@@ -211,14 +204,7 @@ function PaymentRequestRow({ paymentRequest }: { paymentRequest: PaymentRequest 
         </p>
       </td>
       <td className="px-4 py-4">
-        <span
-          className={cn(
-            'inline-flex rounded-full px-2.5 py-1 text-xs font-semibold capitalize',
-            statusBadgeClasses[paymentRequest.status],
-          )}
-        >
-          {t(`paymentRequests.status.${paymentRequest.status}`)}
-        </span>
+        <PaymentRequestStatusBadge status={paymentRequest.status} />
       </td>
       <td className="px-4 py-4 text-[#526076]">{formatDateTime(paymentRequest.expires_at)}</td>
       <td className="px-4 py-4 text-right">

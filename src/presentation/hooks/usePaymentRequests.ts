@@ -4,6 +4,7 @@ import type {
   CreatePaymentRequestPayload,
   ListPaymentRequestsParams,
   PaymentRequestStatus,
+  ReviewPaymentRequestPayload,
 } from '@/domain'
 import { currencyFlowApi } from '@/infrastructure'
 
@@ -34,6 +35,42 @@ export function useCreatePaymentRequest() {
   return useMutation({
     mutationFn: (payload: CreatePaymentRequestPayload) =>
       currencyFlowApi.createPaymentRequest(payload),
+    onSuccess(paymentRequest) {
+      queryClient.setQueryData(paymentRequestQueryKeys.detail(paymentRequest.id), paymentRequest)
+      void queryClient.invalidateQueries({ queryKey: paymentRequestQueryKeys.all })
+    },
+  })
+}
+
+export function useApprovePaymentRequest() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: ({
+      paymentRequestId,
+      payload,
+    }: {
+      paymentRequestId: string
+      payload?: ReviewPaymentRequestPayload
+    }) => currencyFlowApi.approvePaymentRequest(paymentRequestId, payload),
+    onSuccess(paymentRequest) {
+      queryClient.setQueryData(paymentRequestQueryKeys.detail(paymentRequest.id), paymentRequest)
+      void queryClient.invalidateQueries({ queryKey: paymentRequestQueryKeys.all })
+    },
+  })
+}
+
+export function useRejectPaymentRequest() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: ({
+      paymentRequestId,
+      payload,
+    }: {
+      paymentRequestId: string
+      payload?: ReviewPaymentRequestPayload
+    }) => currencyFlowApi.rejectPaymentRequest(paymentRequestId, payload),
     onSuccess(paymentRequest) {
       queryClient.setQueryData(paymentRequestQueryKeys.detail(paymentRequest.id), paymentRequest)
       void queryClient.invalidateQueries({ queryKey: paymentRequestQueryKeys.all })
