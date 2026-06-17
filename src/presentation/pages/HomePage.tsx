@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
 
 import { Button } from '@/shared/ui/button'
+import { LanguageSwitcher } from '@/shared/ui/language-switcher'
 
 const capabilities = [
   {
@@ -34,7 +35,7 @@ export function HomePage() {
   return (
     <main className="min-h-screen bg-[#f7f8fb]">
       <section className="mx-auto flex min-h-screen w-full max-w-6xl flex-col px-6 py-8">
-        <header className="flex items-center justify-between border-b border-[#dfe5ef] pb-5">
+        <header className="flex flex-wrap items-center justify-between gap-4 border-b border-[#dfe5ef] pb-5">
           <div className="flex items-center gap-3">
             <div className="flex size-10 items-center justify-center rounded-lg bg-[#1268b3] text-sm font-bold text-white">
               CF
@@ -45,9 +46,12 @@ export function HomePage() {
             </div>
           </div>
 
-          <Button asChild type="button" variant="secondary">
-            <Link to="/login">{t('home.signIn')}</Link>
-          </Button>
+          <div className="flex items-center gap-3">
+            <LanguageSwitcher />
+            <Button asChild type="button" variant="secondary">
+              <Link to="/login">{t('home.signIn')}</Link>
+            </Button>
+          </div>
         </header>
 
         <div className="grid flex-1 items-center gap-10 py-12 lg:grid-cols-[1.1fr_0.9fr]">
