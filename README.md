@@ -15,6 +15,11 @@ It consumes the Laravel API from the `CurrencyFlow` backend repository and will 
 - React
 - TypeScript
 - Vite
+- Tailwind CSS
+- React Router
+- TanStack Query
+- Zod
+- lucide-react
 - Docker for local development
 
 ## Local Development
@@ -59,6 +64,26 @@ docker compose down
 
 The Docker setup mounts the source code into the container and keeps `node_modules` in a Docker volume, so Vite hot reload can run without requiring local Node.js dependencies.
 
+## Quality Checks
+
+Run linting:
+
+```bash
+docker compose exec frontend npm run lint
+```
+
+Run formatting check:
+
+```bash
+docker compose exec frontend npm run format:check
+```
+
+Run a production build:
+
+```bash
+docker compose exec frontend npm run build
+```
+
 ## Planned Architecture
 
 The frontend will use a pragmatic Clean Architecture adapted to React:
@@ -80,10 +105,8 @@ High-level rules:
 - Domain code stays framework-light and free from React/browser APIs.
 - Infrastructure owns API calls, token storage, environment access, and DTO mapping.
 
-## Delivery Checklist
-
-See:
+More details:
 
 ```text
-FRONTEND_DELIVERY_CHECKLIST.md
+docs/architecture.md
 ```
