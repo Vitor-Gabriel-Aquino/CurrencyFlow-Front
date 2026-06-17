@@ -52,6 +52,47 @@ export const ptBR = {
       error: 'Nao foi possivel iniciar o login. Tente novamente.',
       back: 'Voltar para a visao geral',
     },
+    register: {
+      eyebrow: 'Cadastro de colaborador',
+      title: 'Crie sua conta CurrencyFlow.',
+      description:
+        'Cadastre-se como colaborador para enviar solicitacoes de pagamento usando seu pais e moeda preferida.',
+      formTitle: 'Dados da conta',
+      formDescription:
+        'Use o pais e a moeda que voce espera usar na maioria das solicitacoes de pagamento.',
+      referenceDataError: 'Nao foi possivel carregar paises e moedas. Tente novamente.',
+      error: 'Nao foi possivel concluir o cadastro. Tente novamente.',
+      pending: 'Criando conta...',
+      submit: 'Criar conta',
+      alreadyHaveAccount: 'Ja tem uma conta?',
+      goToLogin: 'Continuar para login',
+      successEyebrow: 'Conta criada',
+      successTitle: 'Sua conta esta pronta.',
+      successDescription:
+        'Agora voce pode entrar pelo fluxo OAuth PKCE seguro e acessar seu workspace.',
+      fields: {
+        name: 'Nome completo',
+        email: 'Email',
+        password: 'Senha',
+        passwordConfirmation: 'Confirmar senha',
+        country: 'Pais',
+        preferredCurrency: 'Moeda preferida',
+      },
+      placeholders: {
+        country: 'Selecione um pais',
+        preferredCurrency: 'Selecione uma moeda',
+      },
+      validation: {
+        required: 'Este campo e obrigatorio.',
+        email: 'Informe um email valido.',
+        passwordMin: 'Use pelo menos 8 caracteres.',
+        passwordConfirmation: 'A confirmacao da senha nao confere.',
+      },
+      actions: {
+        togglePassword: 'Mostrar ou ocultar senha',
+        togglePasswordConfirmation: 'Mostrar ou ocultar confirmacao da senha',
+      },
+    },
     callback: {
       processingTitle: 'Finalizando login',
       processingDescription: 'Estamos validando a autorizacao e preparando sua sessao.',

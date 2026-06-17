@@ -4,6 +4,7 @@ import { AuthCallbackPage } from '@/presentation/pages/AuthCallbackPage'
 import { DashboardPage } from '@/presentation/pages/DashboardPage'
 import { HomePage } from '@/presentation/pages/HomePage'
 import { LoginPage } from '@/presentation/pages/LoginPage'
+import { RegisterPage } from '@/presentation/pages/RegisterPage'
 import { ProtectedRoute } from '@/presentation/routes/ProtectedRoute'
 
 export const appRouter = createBrowserRouter([
@@ -14,6 +15,10 @@ export const appRouter = createBrowserRouter([
   {
     path: '/login',
     element: <LoginPage />,
+  },
+  {
+    path: '/register',
+    element: <RegisterPage />,
   },
   {
     path: '/auth/callback',

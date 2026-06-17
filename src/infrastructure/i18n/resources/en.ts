@@ -52,6 +52,47 @@ export const en = {
       error: 'We could not start the sign in flow. Please try again.',
       back: 'Back to overview',
     },
+    register: {
+      eyebrow: 'Employee onboarding',
+      title: 'Create your CurrencyFlow account.',
+      description:
+        'Register as an employee to submit payment requests in your local country and preferred currency.',
+      formTitle: 'Account details',
+      formDescription:
+        'Use the same country and currency you expect to use for most payment requests.',
+      referenceDataError: 'Countries and currencies could not be loaded. Please try again.',
+      error: 'Registration could not be completed. Please try again.',
+      pending: 'Creating account...',
+      submit: 'Create account',
+      alreadyHaveAccount: 'Already have an account?',
+      goToLogin: 'Continue to sign in',
+      successEyebrow: 'Account created',
+      successTitle: 'Your account is ready.',
+      successDescription:
+        'You can now sign in through the secure OAuth PKCE flow and access your workspace.',
+      fields: {
+        name: 'Full name',
+        email: 'Email',
+        password: 'Password',
+        passwordConfirmation: 'Confirm password',
+        country: 'Country',
+        preferredCurrency: 'Preferred currency',
+      },
+      placeholders: {
+        country: 'Select a country',
+        preferredCurrency: 'Select a currency',
+      },
+      validation: {
+        required: 'This field is required.',
+        email: 'Enter a valid email address.',
+        passwordMin: 'Use at least 8 characters.',
+        passwordConfirmation: 'The password confirmation does not match.',
+      },
+      actions: {
+        togglePassword: 'Show or hide password',
+        togglePasswordConfirmation: 'Show or hide password confirmation',
+      },
+    },
     callback: {
       processingTitle: 'Finishing sign in',
       processingDescription:
