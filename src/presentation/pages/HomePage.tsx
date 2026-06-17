@@ -1,5 +1,6 @@
 import { ArrowRight, BadgeEuro, Clock3, ShieldCheck, Workflow } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router'
 
 import { Button } from '@/shared/ui/button'
 
@@ -44,8 +45,8 @@ export function HomePage() {
             </div>
           </div>
 
-          <Button type="button" variant="secondary">
-            {t('home.signIn')}
+          <Button asChild type="button" variant="secondary">
+            <Link to="/login">{t('home.signIn')}</Link>
           </Button>
         </header>
 
@@ -62,9 +63,11 @@ export function HomePage() {
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
-              <Button type="button">
-                {t('home.signIn')}
-                <ArrowRight className="size-4" />
+              <Button asChild type="button">
+                <Link to="/login">
+                  {t('home.signIn')}
+                  <ArrowRight className="size-4" />
+                </Link>
               </Button>
               <Button type="button" variant="secondary">
                 {t('home.createAccount')}
