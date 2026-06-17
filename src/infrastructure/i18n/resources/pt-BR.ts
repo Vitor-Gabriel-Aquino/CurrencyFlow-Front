@@ -41,4 +41,32 @@ export const ptBR = {
       },
     },
   },
+  auth: {
+    loadingWorkspace: 'Carregando seu workspace...',
+    login: {
+      title: 'Entre no CurrencyFlow',
+      description:
+        'Continue com o fluxo OAuth PKCE seguro para acessar seu workspace de solicitacoes de pagamento.',
+      submit: 'Continuar com OAuth',
+      pending: 'Redirecionando...',
+      error: 'Nao foi possivel iniciar o login. Tente novamente.',
+      back: 'Voltar para a visao geral',
+    },
+    callback: {
+      processingTitle: 'Finalizando login',
+      processingDescription: 'Estamos validando a autorizacao e preparando sua sessao.',
+      failedTitle: 'Nao foi possivel concluir o login',
+      failedDescription:
+        'A resposta de autorizacao e invalida ou expirou. Inicie o login novamente.',
+      returnToLogin: 'Voltar para login',
+    },
+  },
+  dashboard: {
+    subtitle: 'Workspace de solicitacoes de pagamento',
+    signOut: 'Sair',
+    signedInAs: 'Logado como',
+    role: 'Funcao',
+    country: 'Pais',
+    preferredCurrency: 'Moeda preferida',
+  },
 }

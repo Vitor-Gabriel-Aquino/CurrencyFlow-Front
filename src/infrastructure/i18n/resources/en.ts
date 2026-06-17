@@ -41,4 +41,33 @@ export const en = {
       },
     },
   },
+  auth: {
+    loadingWorkspace: 'Loading your workspace...',
+    login: {
+      title: 'Sign in to CurrencyFlow',
+      description:
+        'Continue with the secure OAuth PKCE flow to access your payment request workspace.',
+      submit: 'Continue with OAuth',
+      pending: 'Redirecting...',
+      error: 'We could not start the sign in flow. Please try again.',
+      back: 'Back to overview',
+    },
+    callback: {
+      processingTitle: 'Finishing sign in',
+      processingDescription:
+        'We are validating the authorization response and preparing your session.',
+      failedTitle: 'Sign in could not be completed',
+      failedDescription:
+        'The authorization response is invalid or expired. Start the sign in flow again.',
+      returnToLogin: 'Return to sign in',
+    },
+  },
+  dashboard: {
+    subtitle: 'Payment request workspace',
+    signOut: 'Sign out',
+    signedInAs: 'Signed in as',
+    role: 'Role',
+    country: 'Country',
+    preferredCurrency: 'Preferred currency',
+  },
 }

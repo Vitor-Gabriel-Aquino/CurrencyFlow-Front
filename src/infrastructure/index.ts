@@ -1,4 +1,6 @@
 export { currencyFlowApi } from './api/currencyFlowApi'
+export { sessionLoginPromptStorage } from './auth/loginPromptStorage'
+export { sessionPkceStorage } from './auth/pkceStorage'
 export { sessionAuthTokenStorage } from './auth/tokenStorage'
 export { env } from './config/env'
 export { ApiError, normalizeApiError } from './http/apiError'
