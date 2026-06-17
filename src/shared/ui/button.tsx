@@ -12,6 +12,7 @@ const buttonVariants = cva(
         primary: 'bg-[#1268b3] text-white hover:bg-[#0f5a9c] focus-visible:outline-[#1268b3]',
         secondary:
           'border border-[#cfd8e6] bg-white text-[#172033] hover:bg-[#f2f5f9] focus-visible:outline-[#1268b3]',
+        danger: 'bg-[#b42318] text-white hover:bg-[#912018] focus-visible:outline-[#b42318]',
       },
     },
     defaultVariants: {

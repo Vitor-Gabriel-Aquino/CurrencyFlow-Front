@@ -2,18 +2,11 @@ import { AlertCircle, ArrowLeft } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Link, useParams } from 'react-router'
 
-import type { PaymentRequest, PaymentRequestStatus } from '@/domain'
+import type { PaymentRequest } from '@/domain'
 import { usePaymentRequest } from '@/presentation/hooks/usePaymentRequests'
 import { Button } from '@/shared/ui/button'
-import { cn } from '@/shared/utils/cn'
+import { PaymentRequestStatusBadge } from '@/shared/ui/payment-request-status-badge'
 import { formatCurrencyAmount, formatDateTime } from '@/shared/utils/format'
-
-const statusBadgeClasses: Record<PaymentRequestStatus, string> = {
-  pending: 'bg-[#e9f2fb] text-[#1268b3]',
-  approved: 'bg-[#ecfdf3] text-[#027a48]',
-  rejected: 'bg-[#fef3f2] text-[#b42318]',
-  expired: 'bg-[#fff4e5] text-[#b54708]',
-}
 
 export function PaymentRequestDetailPage() {
   const { paymentRequestId } = useParams()
@@ -74,14 +67,7 @@ function PaymentRequestDetail({ paymentRequest }: { paymentRequest: PaymentReque
           </p>
         </div>
 
-        <span
-          className={cn(
-            'inline-flex rounded-full px-3 py-1.5 text-sm font-semibold capitalize',
-            statusBadgeClasses[paymentRequest.status],
-          )}
-        >
-          {t(`paymentRequests.status.${paymentRequest.status}`)}
-        </span>
+        <PaymentRequestStatusBadge className="px-3 py-1.5 text-sm" status={paymentRequest.status} />
       </div>
 
       <section className="grid gap-4 md:grid-cols-3">

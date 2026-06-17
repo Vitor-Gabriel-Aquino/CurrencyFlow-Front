@@ -254,8 +254,36 @@ export const ptBR = {
     title: 'Revisar solicitacoes pendentes',
     description:
       'Usuarios financeiros podem aprovar ou rejeitar solicitacoes pendentes e nao expiradas neste workspace.',
+    loadingTitle: 'Carregando fila de revisao',
+    loadingDescription:
+      'CurrencyFlow esta carregando solicitacoes pendentes para revisao financeira.',
+    errorTitle: 'Nao foi possivel carregar a fila de revisao',
+    errorDescription: 'Atualize a pagina ou tente novamente em instantes.',
     emptyTitle: 'Nenhuma fila de revisao carregada ainda',
     emptyDescription:
       'Solicitacoes pendentes prontas para revisao financeira aparecerao aqui com o contexto necessario para decisoes de aprovacao.',
+    fields: {
+      originalAmount: 'Valor original',
+      convertedAmount: 'Valor convertido',
+      exchangeRate: 'Cotacao EUR',
+      expiresAt: 'Expira em',
+      reviewNote: 'Nota de revisao',
+    },
+    placeholders: {
+      reviewNote: 'Adicione uma nota opcional para o historico de auditoria',
+    },
+    actions: {
+      approve: 'Aprovar',
+      approving: 'Aprovando...',
+      approved: 'Solicitacao de pagamento aprovada.',
+      reject: 'Rejeitar',
+      rejecting: 'Rejeitando...',
+      rejected: 'Solicitacao de pagamento rejeitada.',
+    },
+    errors: {
+      conflict: 'Esta solicitacao nao esta mais pendente ou revisavel.',
+      forbidden: 'Voce nao tem permissao para revisar esta solicitacao.',
+      generic: 'Nao foi possivel concluir a acao de revisao. Tente novamente.',
+    },
   },
 }
