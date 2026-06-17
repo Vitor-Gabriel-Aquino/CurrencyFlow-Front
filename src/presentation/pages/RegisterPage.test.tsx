@@ -80,8 +80,10 @@ describe('RegisterPage', () => {
     await user.type(screen.getByLabelText('Email'), 'jane@example.com')
     await user.type(screen.getByLabelText('Password'), 'password')
     await user.type(screen.getByLabelText('Confirm password'), 'password')
-    await user.selectOptions(await screen.findByLabelText('Country'), 'BR')
-    await user.selectOptions(await screen.findByLabelText('Preferred currency'), 'BRL')
+    await user.type(await screen.findByLabelText('Country'), 'bra')
+    await user.click(screen.getByRole('option', { name: 'Brazil (BR)' }))
+    await user.type(screen.getByLabelText('Preferred currency'), 'brl')
+    await user.click(screen.getByRole('option', { name: 'BRL - Brazilian Real' }))
     await user.click(screen.getByRole('button', { name: 'Create account' }))
 
     expect(apiMocks.registerUser).toHaveBeenCalledWith({
@@ -113,8 +115,10 @@ describe('RegisterPage', () => {
     await user.type(screen.getByLabelText('Email'), 'jane@example.com')
     await user.type(screen.getByLabelText('Password'), 'password')
     await user.type(screen.getByLabelText('Confirm password'), 'password')
-    await user.selectOptions(await screen.findByLabelText('Country'), 'BR')
-    await user.selectOptions(await screen.findByLabelText('Preferred currency'), 'BRL')
+    await user.type(await screen.findByLabelText('Country'), 'bra')
+    await user.click(screen.getByRole('option', { name: 'Brazil (BR)' }))
+    await user.type(screen.getByLabelText('Preferred currency'), 'brl')
+    await user.click(screen.getByRole('option', { name: 'BRL - Brazilian Real' }))
     await user.click(screen.getByRole('button', { name: 'Create account' }))
 
     expect(await screen.findByText('Registration could not be completed. Please try again.')).toBeInTheDocument()

@@ -1,4 +1,7 @@
 export const en = {
+  common: {
+    noResults: 'No results found',
+  },
   home: {
     brandSubtitle: 'Multi-currency payments',
     signIn: 'Sign in',
@@ -139,9 +142,104 @@ export const en = {
     title: 'Requests overview',
     description:
       'Review submitted requests, follow their status, and inspect the exchange-rate snapshot used at creation time.',
+    actions: {
+      new: 'New request',
+      view: 'View details',
+    },
+    filters: {
+      status: 'Status',
+    },
+    status: {
+      all: 'All',
+      pending: 'Pending',
+      approved: 'Approved',
+      rejected: 'Rejected',
+      expired: 'Expired',
+    },
+    events: {
+      created: 'Created',
+      approved: 'Approved',
+      rejected: 'Rejected',
+      expired: 'Expired',
+    },
+    table: {
+      title: 'Payment request list',
+      description: 'Filter and inspect requests submitted through CurrencyFlow.',
+      noDescription: 'No description provided',
+      columns: {
+        request: 'Request',
+        amount: 'Amount',
+        status: 'Status',
+        expires: 'Expires',
+        actions: 'Actions',
+      },
+    },
+    pagination: {
+      summary: 'Page {{page}} of {{total}} · {{count}} requests',
+      previous: 'Previous',
+      next: 'Next',
+    },
+    loadingTitle: 'Loading payment requests',
+    loadingDescription: 'CurrencyFlow is loading the latest request data.',
+    errorTitle: 'Payment requests could not be loaded',
+    errorDescription: 'Refresh the page or try again in a moment.',
     emptyTitle: 'No requests loaded yet',
     emptyDescription:
       'Submitted requests will appear here with their current status, original currency, and exchange-rate context.',
+    form: {
+      fields: {
+        title: 'Title',
+        description: 'Description',
+        amount: 'Amount',
+        currency: 'Currency',
+      },
+      placeholders: {
+        currency: 'Select a currency',
+      },
+      validation: {
+        required: 'This field is required.',
+        amount: 'Enter a valid amount with up to 2 decimal places.',
+      },
+      errors: {
+        currencies: 'Currencies could not be loaded. Please try again.',
+        generic: 'Payment request could not be created. Please try again.',
+        exchangeProviderUnavailable:
+          'Exchange rates are temporarily unavailable. Please try again shortly.',
+      },
+      actions: {
+        cancel: 'Cancel',
+        create: 'Create request',
+        creating: 'Creating request...',
+      },
+    },
+    detail: {
+      eyebrow: 'Payment request detail',
+      back: 'Back to requests',
+      loadingTitle: 'Loading payment request',
+      loadingDescription: 'CurrencyFlow is loading this request snapshot.',
+      errorTitle: 'Payment request could not be loaded',
+      errorDescription: 'The request may not exist or may no longer be accessible.',
+      notFoundTitle: 'Payment request not found',
+      notFoundDescription: 'Open the request again from the payment request list.',
+      originalAmount: 'Original amount',
+      convertedAmount: 'Converted amount',
+      expiresAt: 'Expires at',
+      exchangeSnapshot: 'Exchange-rate snapshot',
+      review: 'Review',
+      exchangeFields: {
+        baseCurrency: 'Base currency',
+        localCurrency: 'Local currency',
+        rate: 'EUR exchange rate',
+        source: 'Source',
+        fetchedAt: 'Fetched at',
+      },
+      reviewFields: {
+        reviewedBy: 'Reviewed by',
+        reviewedAt: 'Reviewed at',
+        note: 'Review note',
+        events: 'Events',
+      },
+    },
   },
   newPaymentRequest: {
     eyebrow: 'New request',

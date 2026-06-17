@@ -7,6 +7,7 @@ import { FinanceReviewPage } from '@/presentation/pages/FinanceReviewPage'
 import { HomePage } from '@/presentation/pages/HomePage'
 import { LoginPage } from '@/presentation/pages/LoginPage'
 import { NewPaymentRequestPage } from '@/presentation/pages/NewPaymentRequestPage'
+import { PaymentRequestDetailPage } from '@/presentation/pages/PaymentRequestDetailPage'
 import { PaymentRequestsPage } from '@/presentation/pages/PaymentRequestsPage'
 import { FinanceRoute } from '@/presentation/routes/FinanceRoute'
 import { RegisterPage } from '@/presentation/pages/RegisterPage'
@@ -48,6 +49,10 @@ export const appRouter = createBrowserRouter([
       {
         path: 'payment-requests/new',
         element: <NewPaymentRequestPage />,
+      },
+      {
+        path: 'payment-requests/:paymentRequestId',
+        element: <PaymentRequestDetailPage />,
       },
       {
         path: 'finance-review',
