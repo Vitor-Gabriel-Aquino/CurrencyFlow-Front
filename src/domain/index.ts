@@ -9,6 +9,7 @@ export type {
 } from './auth/types'
 export type {
   CreatePaymentRequestPayload,
+  ExchangeRatePreview,
   ListPaymentRequestsParams,
   PaginationMeta,
   PaymentRequest,

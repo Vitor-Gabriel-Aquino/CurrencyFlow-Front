@@ -120,10 +120,6 @@ function PaymentRequestDetail({ paymentRequest }: { paymentRequest: PaymentReque
           </h3>
           <dl className="mt-4 grid gap-4">
             <DetailItem
-              label={t('paymentRequests.detail.reviewFields.reviewedBy')}
-              value={paymentRequest.review.reviewed_by ?? '-'}
-            />
-            <DetailItem
               label={t('paymentRequests.detail.reviewFields.reviewedAt')}
               value={formatDateTime(paymentRequest.review.reviewed_at)}
             />

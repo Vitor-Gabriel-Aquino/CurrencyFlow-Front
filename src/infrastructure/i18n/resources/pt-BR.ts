@@ -215,6 +215,16 @@ export const ptBR = {
         create: 'Criar solicitação',
         creating: 'Criando solicitação...',
       },
+      exchangePreview: {
+        title: 'Prévia da cotação atual do EUR',
+        loading: 'Carregando a cotação atual...',
+        error: 'Não foi possível carregar a cotação atual.',
+        rate: 'Cotação prévia',
+        source: 'Fonte',
+        fetchedAt: 'Buscada em',
+        disclaimer:
+          'Esta é uma prévia ao vivo. O snapshot de auditoria é capturado novamente quando a solicitação é criada.',
+      },
     },
     detail: {
       eyebrow: 'Detalhe da solicitação',

@@ -2,6 +2,7 @@ import type {
   Country,
   CreatePaymentRequestPayload,
   Currency,
+  ExchangeRatePreview,
   ListPaymentRequestsParams,
   OAuthTokenPayload,
   OAuthTokenResponse,
@@ -29,6 +30,7 @@ export type CurrencyFlowApi = {
   listPaymentRequests(
     params?: ListPaymentRequestsParams,
   ): Promise<PaginatedResponse<PaymentRequest>>
+  getExchangeRatePreview(currencyCode: string): Promise<ExchangeRatePreview>
   createPaymentRequest(payload: CreatePaymentRequestPayload): Promise<PaymentRequest>
   getPaymentRequest(paymentRequestId: string): Promise<PaymentRequest>
   approvePaymentRequest(

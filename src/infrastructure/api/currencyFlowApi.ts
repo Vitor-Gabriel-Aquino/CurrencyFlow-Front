@@ -3,6 +3,7 @@ import type {
   Country,
   CreatePaymentRequestPayload,
   Currency,
+  ExchangeRatePreview,
   ListPaymentRequestsParams,
   OAuthTokenPayload,
   OAuthTokenResponse,
@@ -88,6 +89,20 @@ export const currencyFlowApi: CurrencyFlowApi = {
         per_page: params?.per_page,
       },
     })
+  },
+
+  async getExchangeRatePreview(currencyCode: string) {
+    const response = await httpClient.request<DataResponse<ExchangeRatePreview>>(
+      '/api/exchange-rate-preview',
+      {
+        authenticated: true,
+        query: {
+          currency_code: currencyCode,
+        },
+      },
+    )
+
+    return response.data
   },
 
   async createPaymentRequest(payload: CreatePaymentRequestPayload) {

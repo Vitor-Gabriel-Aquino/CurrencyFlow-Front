@@ -27,6 +27,14 @@ export type PaymentRequest = {
   events: Array<'created' | 'approved' | 'rejected' | 'expired'>
 }
 
+export type ExchangeRatePreview = {
+  base_currency_code: string
+  local_currency_code: string
+  eur_exchange_rate: string
+  source: string
+  fetched_at: string
+}
+
 export type CreatePaymentRequestPayload = {
   title: string
   description?: string | null

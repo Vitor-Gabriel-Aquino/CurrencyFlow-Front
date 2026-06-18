@@ -32,18 +32,20 @@ export function AutocompleteField({
   const listboxId = useId()
   const selectedOption = options.find((option) => option.value === value)
   const [isOpen, setIsOpen] = useState(false)
-  const [query, setQuery] = useState(selectedOption?.label ?? '')
-  const visibleOptions = useMemo(() => {
-    const normalizedQuery = query.trim().toLowerCase()
+  const [query, setQuery] = useState('')
+  const inputValue = isOpen ? query : selectedOption?.label ?? ''
 
-    if (!normalizedQuery || selectedOption?.label === query) {
+  const visibleOptions = useMemo(() => {
+    const normalizedQuery = inputValue.trim().toLowerCase()
+
+    if (!normalizedQuery || selectedOption?.label === inputValue) {
       return options.slice(0, 30)
     }
 
     return options
       .filter((option) => option.label.toLowerCase().includes(normalizedQuery))
       .slice(0, 30)
-  }, [options, query, selectedOption?.label])
+  }, [inputValue, options, selectedOption?.label])
 
   function selectOption(option: AutocompleteOption) {
     onChange(option.value)
@@ -67,7 +69,7 @@ export function AutocompleteField({
         onBlur={() => {
           window.setTimeout(() => {
             setIsOpen(false)
-            setQuery(selectedOption?.label ?? '')
+            setQuery('')
           }, 100)
         }}
         onChange={(event) => {
@@ -75,11 +77,14 @@ export function AutocompleteField({
           onChange('')
           setIsOpen(true)
         }}
-        onFocus={() => setIsOpen(true)}
+        onFocus={() => {
+          setQuery(selectedOption?.label ?? '')
+          setIsOpen(true)
+        }}
         placeholder={placeholder}
         role="combobox"
         type="text"
-        value={query}
+        value={inputValue}
       />
       <ChevronDown className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-[#657189]" />
 

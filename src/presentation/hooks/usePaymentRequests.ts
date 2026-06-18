@@ -10,6 +10,8 @@ import { currencyFlowApi } from '@/infrastructure'
 
 export const paymentRequestQueryKeys = {
   all: ['paymentRequests'] as const,
+  exchangeRatePreview: (currencyCode: string) =>
+    [...paymentRequestQueryKeys.all, 'exchangeRatePreview', currencyCode] as const,
   list: (params: ListPaymentRequestsParams) => [...paymentRequestQueryKeys.all, 'list', params],
   detail: (paymentRequestId: string) =>
     [...paymentRequestQueryKeys.all, 'detail', paymentRequestId] as const,
@@ -26,6 +28,15 @@ export function usePaymentRequest(paymentRequestId: string) {
   return useQuery({
     queryKey: paymentRequestQueryKeys.detail(paymentRequestId),
     queryFn: () => currencyFlowApi.getPaymentRequest(paymentRequestId),
+  })
+}
+
+export function useExchangeRatePreview(currencyCode: string) {
+  return useQuery({
+    queryKey: paymentRequestQueryKeys.exchangeRatePreview(currencyCode),
+    queryFn: () => currencyFlowApi.getExchangeRatePreview(currencyCode),
+    enabled: currencyCode.length === 3,
+    retry: false,
   })
 }
 

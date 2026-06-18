@@ -216,6 +216,16 @@ export const en = {
         create: 'Create request',
         creating: 'Creating request...',
       },
+      exchangePreview: {
+        title: 'Current EUR rate preview',
+        loading: 'Loading the current exchange rate...',
+        error: 'The current exchange rate could not be loaded.',
+        rate: 'Preview rate',
+        source: 'Source',
+        fetchedAt: 'Fetched at',
+        disclaimer:
+          'This is a live preview. The audit snapshot is captured again when the request is created.',
+      },
     },
     detail: {
       eyebrow: 'Payment request detail',
