@@ -12,6 +12,9 @@ export default defineConfig({
     },
   },
   server: {
+    allowedHosts: [
+      process.env.VITE_ALLOWED_HOST ?? 'currencyflow-front-production.up.railway.app',
+    ],
     host: '0.0.0.0',
     port: 3000,
   },
